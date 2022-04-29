@@ -369,13 +369,13 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'hill': //Week 1
+				if(!ClientPrefs.lowQuality) {
 		    	var hill_bg:BGSprite = new BGSprite("hill/1382_sin_titulo_20220316203836", 0, 0, 0.9, 0.9);
 				add(hill_bg);
 
 				sun = new BGSprite("hill/sun", 1643, -408, 1.1, 1.1, ["sun"]);
 				sun.animation.stop();
 				add(sun);
-		}
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
 					halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);

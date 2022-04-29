@@ -3846,7 +3846,9 @@ class PlayState extends MusicBeatState
 				}
 				
 			case 'hill':
+				if(!ClientPrefs.lowQuality) {
 				sun.animation.play("sun", true);
+				}
 
 			case 'mall':
 				if(!ClientPrefs.lowQuality) {

@@ -375,7 +375,7 @@ class PlayState extends MusicBeatState
 				sun = new BGSprite("hill/sun", 1643, -408, 1.1, 1.1, ["sun"]);
 				sun.animation.stop();
 				add(sun);
-
+		}
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
 					halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);

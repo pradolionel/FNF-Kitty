@@ -368,7 +368,7 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'stage': //Week 1
+			case 'hill': //Week 1
 				var bg:BGSprite = new BGSprite('house/1492_sin_titulo_20220316203514', 0, 0, 0.9, 0.9);
 				add(bg);
 				

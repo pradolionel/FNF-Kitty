@@ -206,7 +206,7 @@ class TitleState extends MusicBeatState
 		logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 		
-		backgroundTitle = new FlxSprite().loadGraphic(Paths.image('TitleBG'));
+		backgroundTitle = new FlxSprite().loadGraphic(Paths.image('hilm'));
 		backgroundTitle.screenCenter();
 		backgroundTitle.antialiasing = ClientPrefs.globalAntialiasing;
 

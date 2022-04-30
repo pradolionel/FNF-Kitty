@@ -1,5 +1,1 @@
-The Video .webm file 
-The audio .OGG file
-The frames per second .txt file
-
-And it can have any resolution
+They have to be in .mp4 and 1280x720 resolution!!!

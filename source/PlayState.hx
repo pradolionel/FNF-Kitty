@@ -391,10 +391,10 @@ class PlayState extends MusicBeatState
 				CoolUtil.precacheSound('thunder_2');
 
 			case 'bgdemon': //Week 3
-				bg = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
-				bg.cameras = [camHUD];
-				bg.screenCenter();
-				bg.alpha = 0;
+			    kid = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
+				kid.cameras = [camHUD];
+				kid.screenCenter();
+				kid.alpha = 0;
 				
 			case 'limo': //Week 4
 				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
@@ -1796,6 +1796,17 @@ class PlayState extends MusicBeatState
 		}*/
 
 		callOnLuas('onUpdate', [elapsed]);
+
+		if (18731 < FlxG.sound.music.time && cutsceneStaticTimer == null && curSong.toLowerCase() == "the dark desire")
+			cutsceneStaticTimer = FlxTween.tween(kid, {alpha: 1}, 3.7829268292683, {onComplete: function (_) 
+			{
+				dad.idleSuffix = "";
+				dad.playAnim("idle", true);
+
+				new FlxTimer().start(0.4, function (_) {
+					FlxTween.tween(kid, {alpha: 0}, 0.4);
+				});
+			}});
 
 		switch (curStage)
 		{

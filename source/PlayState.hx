@@ -217,6 +217,8 @@ class PlayState extends MusicBeatState
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
+	
+	var kid:BGSprite;
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;

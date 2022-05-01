@@ -395,11 +395,12 @@ class PlayState extends MusicBeatState
 				add(hill_bg);
 				
 			case 'bgdemon': //Week 5
-				kid = new BGSprite("HOLA_DEMONIO", 0, 0, 0, 0);
-				kid.cameras = [camHUD];
-				kid.screenCenter();
-				kid.alpha = 0;
-				
+		     	var redBord:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('stages/redvignette'));
+				redBord.antialiasing = ClientPrefs.globalAntialiasing;
+				redBord.cameras = [camOther];
+				redBord.alpha = 0;
+				add(redBord);
+
 			case '2517_untitled_20220419221714': //Week 5 - Winter Horrorland
 				var bg:BGSprite = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221714", 0, 0, 0.9, 0.9);
 				add(bg);

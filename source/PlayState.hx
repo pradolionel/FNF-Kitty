@@ -217,8 +217,6 @@ class PlayState extends MusicBeatState
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
-	
-	var kid:BGSprite;
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
@@ -370,9 +368,32 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'house': //Week 1
-				var bg:BGSprite = new BGSprite('house/1492_sin_titulo_20220316203514', 0, 0, 0.9, 0.9);
+			case 'stage': //Week 1
+				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 				add(bg);
+
+				var stageFront:BGSprite = new BGSprite('stagefront', -650, 600, 0.9, 0.9);
+				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+				stageFront.updateHitbox();
+				add(stageFront);
+
+				if(!ClientPrefs.lowQuality) {
+					var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
+					stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
+					stageLight.updateHitbox();
+					add(stageLight);
+					var stageLight:BGSprite = new BGSprite('stage_light', 1225, -100, 0.9, 0.9);
+					stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
+					stageLight.updateHitbox();
+					stageLight.flipX = true;
+					add(stageLight);
+
+					var stageCurtains:BGSprite = new BGSprite('stagecurtains', -500, -300, 1.3, 1.3);
+					stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+					stageCurtains.updateHitbox();
+					add(stageCurtains);
+				}
+
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
 					halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);
@@ -390,12 +411,44 @@ class PlayState extends MusicBeatState
 				CoolUtil.precacheSound('thunder_1');
 				CoolUtil.precacheSound('thunder_2');
 
-			case 'bgdemon': //Week 3
-			    kid = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
-				kid.cameras = [camHUD];
-				kid.screenCenter();
-				kid.alpha = 0;
-				
+			case 'philly': //Week 3
+				if(!ClientPrefs.lowQuality) {
+					var bg:BGSprite = new BGSprite('philly/sky', -100, 0, 0.1, 0.1);
+					add(bg);
+				}
+
+				var city:BGSprite = new BGSprite('philly/city', -10, 0, 0.3, 0.3);
+				city.setGraphicSize(Std.int(city.width * 0.85));
+				city.updateHitbox();
+				add(city);
+
+				phillyCityLights = new FlxTypedGroup<BGSprite>();
+				add(phillyCityLights);
+
+				for (i in 0...5)
+				{
+					var light:BGSprite = new BGSprite('philly/win' + i, city.x, city.y, 0.3, 0.3);
+					light.visible = false;
+					light.setGraphicSize(Std.int(light.width * 0.85));
+					light.updateHitbox();
+					phillyCityLights.add(light);
+				}
+
+				if(!ClientPrefs.lowQuality) {
+					var streetBehind:BGSprite = new BGSprite('philly/behindTrain', -40, 50);
+					add(streetBehind);
+				}
+
+				phillyTrain = new BGSprite('philly/train', 2000, 360);
+				add(phillyTrain);
+
+				trainSound = new FlxSound().loadEmbedded(Paths.sound('train_passes'));
+				CoolUtil.precacheSound('train_passes');
+				FlxG.sound.list.add(trainSound);
+
+				var street:BGSprite = new BGSprite('philly/street', -40, 50);
+				add(street);
+
 			case 'limo': //Week 4
 				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
 				add(skyBG);
@@ -1787,8 +1840,7 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
-	
-	var cutsceneStaticTimer:FlxTween;
+
 	override public function update(elapsed:Float)
 	{
 		/*if (FlxG.keys.justPressed.NINE)
@@ -1797,17 +1849,6 @@ class PlayState extends MusicBeatState
 		}*/
 
 		callOnLuas('onUpdate', [elapsed]);
-
-		if (18731 < FlxG.sound.music.time && cutsceneStaticTimer == null && curSong.toLowerCase() == "the dark desire")
-			cutsceneStaticTimer = FlxTween.tween(kid, {alpha: 1}, 3.7829268292683, {onComplete: function (_) 
-			{
-				dad.idleSuffix = "";
-				dad.playAnim("idle", true);
-
-				new FlxTimer().start(0.4, function (_) {
-					FlxTween.tween(kid, {alpha: 0}, 0.4);
-				});
-			}});
 
 		switch (curStage)
 		{
@@ -3391,6 +3432,7 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			/*boyfriend.stunned = true;
+
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{

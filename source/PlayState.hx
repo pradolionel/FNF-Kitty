@@ -82,14 +82,18 @@ class PlayState extends MusicBeatState
 	];
 	
 	#if (haxe >= "4.0.0")
+	public var modchartTweens:Map<String, FlxTween> = new Map();
+	public var modchartSprites:Map<String, ModchartSprite> = new Map();
+	public var modchartTimers:Map<String, FlxTimer> = new Map();
+	public var modchartSounds:Map<String, FlxSound> = new Map();
+	#else
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
-	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
+	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, Dynamic>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
-	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
-	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
+	#end
+
 	//event variables
-	private var opponentAltAnims:Bool = false;
 	private var isCameraOnForcedPos:Bool = false;
 	#if (haxe >= "4.0.0")
 	public var boyfriendMap:Map<String, Boyfriend> = new Map();
@@ -101,40 +105,36 @@ class PlayState extends MusicBeatState
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	#end
 
-	public var staticCamX:Float = 0;
-	public var staticCamY:Float = 0;
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
 	public var DAD_X:Float = 100;
 	public var DAD_Y:Float = 100;
 	public var GF_X:Float = 400;
 	public var GF_Y:Float = 130;
-
-	public var songSpeedTween:FlxTween;
-	public var songSpeed(default, set):Float = 1;
-	public var songSpeedType:String = "multiplicative";
-	public var noteKillOffset:Float = 350;
+	
+	public static var songSpeed:Float = 0;
 	
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
+
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
-	public static var staticCamera:Bool = false;
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
+	public static var storyDifficulty:Int = 1;
 
 	public var vocals:FlxSound;
 
-	public var dad:Character = null;
-	public var gf:Character = null;
-	public var boyfriend:Boyfriend = null;
+	public var dad:Character;
+	public var gf:Character;
+	public var boyfriend:Boyfriend;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
-	public var eventNotes:Array<EventNote> = [];
+	public var eventNotes:Array<Dynamic> = [];
 
 	private var strumLine:FlxSprite;
 
@@ -143,6 +143,7 @@ class PlayState extends MusicBeatState
 	private var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
+	private static var resetSpriteCache:Bool = false;
 
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
@@ -162,27 +163,19 @@ class PlayState extends MusicBeatState
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
-	
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
-	
+
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
-	public var startingSong:Bool = false;
-	private var updateTime:Bool = true;
-	public static var chartingMode:Bool = false;
+	private var startingSong:Bool = false;
+	private var updateTime:Bool = false;
+	public static var practiceMode:Bool = false;
+	public static var usedPractice:Bool = false;
+	public static var changedDifficulty:Bool = false;
+	public static var cpuControlled:Bool = false;
+	var runCutscene:Bool = false;
 
-	//Gameplay settings
-	public var healthGain:Float = 1;
-	public var healthLoss:Float = 1;
-	public var instakillOnMiss:Bool = false;
-	public var cpuControlled:Bool = false;
-	public var practiceMode:Bool = false;
-
-	public var botplaySine:Float = 0;
-	public var botplayTxt:FlxText;
+	var botplaySine:Float = 0;
+	var botplayTxt:FlxText;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
@@ -230,6 +223,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
+	public var ghostMisses:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -243,15 +237,9 @@ class PlayState extends MusicBeatState
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
-	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public var inCutscene:Bool = false;
-	public var skipCountdown:Bool = false;
 	var songLength:Float = 0;
-
-	public var boyfriendCameraOffset:Array<Float> = null;
-	public var opponentCameraOffset:Array<Float> = null;
-	public var girlfriendCameraOffset:Array<Float> = null;
 
 	#if desktop
 	// Discord RPC variables
@@ -363,48 +351,18 @@ class PlayState extends MusicBeatState
 			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
-				opponent: [100, 100],
-				hide_girlfriend: false,
-			
-				static_camera: false,
-				static_camera_pos: [0, 0],
-
-				camera_boyfriend: [0, 0],
-				camera_opponent: [0, 0],
-				camera_girlfriend: [0, 0],
-				camera_speed: 1
+				opponent: [100, 100]
 			};
 		}
 
-		if (stageData.static_camera_pos == null)
-			stageData.static_camera_pos = [0, 0];
-
 		defaultCamZoom = stageData.defaultZoom;
 		isPixelStage = stageData.isPixelStage;
-		staticCamera = stageData.static_camera;
-		staticCamX = stageData.static_camera_pos[0];
-		staticCamY = stageData.static_camera_pos[1];
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
 		GF_X = stageData.girlfriend[0];
 		GF_Y = stageData.girlfriend[1];
 		DAD_X = stageData.opponent[0];
 		DAD_Y = stageData.opponent[1];
-
-		if(stageData.camera_speed != null)
-			cameraSpeed = stageData.camera_speed;
-
-		boyfriendCameraOffset = stageData.camera_boyfriend;
-		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
-			boyfriendCameraOffset = [0, 0];
-
-		opponentCameraOffset = stageData.camera_opponent;
-		if(opponentCameraOffset == null)
-			opponentCameraOffset = [0, 0];
-		
-		girlfriendCameraOffset = stageData.camera_girlfriend;
-		if(girlfriendCameraOffset == null)
-			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);

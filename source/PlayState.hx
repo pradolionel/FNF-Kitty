@@ -212,6 +212,7 @@ class PlayState extends MusicBeatState
 	var upperBoppers:BGSprite;
 	var bottomBoppers:BGSprite;
 	var santa:BGSprite;
+	var sun:BGSprite;
 	var heyTimer:Float;
 
 	var bgGirls:BackgroundGirls;

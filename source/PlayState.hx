@@ -3691,7 +3691,6 @@ class PlayState extends MusicBeatState
 				phrase.kill();
 				remove(phrase);
 				phrase.destroy();
-
 				phrasesExisting--;
 			});
 		}

@@ -351,24 +351,12 @@ class PlayState extends MusicBeatState
 			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
-				opponent: [100, 100],
-				hide_girlfriend: false,
-			
-				static_camera: false,
-				static_camera_pos: [0, 0],
-
-				camera_boyfriend: [0, 0],
-				camera_opponent: [0, 0],
-				camera_girlfriend: [0, 0],
-				camera_speed: 1
+				opponent: [100, 100]
 			};
 		}
 
 		defaultCamZoom = stageData.defaultZoom;
 		isPixelStage = stageData.isPixelStage;
-		staticCamera = stageData.static_camera;
-		staticCamX = stageData.static_camera_pos[0];
-		staticCamY = stageData.static_camera_pos[1];
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
 		GF_X = stageData.girlfriend[0];

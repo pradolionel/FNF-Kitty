@@ -603,6 +603,8 @@ class PlayState extends MusicBeatState
 		
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
+		case 'bgdemon':
+				add(kid);
 		}
 
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();
@@ -667,14 +669,27 @@ class PlayState extends MusicBeatState
 			SONG.player3 = gfVersion; //Fix for the Chart Editor
 		}
 
-		gf = new Character(0, 0, gfVersion);
-		startCharacterPos(gf);
-		gf.scrollFactor.set(0.95, 0.95);
-		gfGroup.add(gf);
+		if (!stageData.hide_girlfriend)
+		{
+			gf = new Character(0, 0, gfVersion);
+			startCharacterPos(gf);
+			gf.scrollFactor.set(0.95, 0.95);
+			if (curStage == "bgdemon") {
+				gf.setGraphicSize(357);
+				gf.updateHitbox();
+			}
+			gfGroup.add(gf);
+			startCharacterLua(gf.curCharacter);
+		}
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
+		if (SONG.song.toLowerCase() == "stressed")
+			dad.idleSuffix = "1";
+		else if (curStage == "bgdemon")
+			dad.idleSuffix = "-alt";
 		dadGroup.add(dad);
+		startCharacterLua(dad.curCharacter);
 
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);

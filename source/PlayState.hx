@@ -391,10 +391,10 @@ class PlayState extends MusicBeatState
 				CoolUtil.precacheSound('thunder_2');
 
 			case 'bgdemon': //Week 3
-			    kid = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
-				kid.cameras = [camHUD];
-				kid.screenCenter();
-				kid.alpha = 0;
+				bg = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
+				bg.cameras = [camHUD];
+				bg.screenCenter();
+				bg.alpha = 0;
 				
 			case 'limo': //Week 4
 				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
@@ -603,8 +603,6 @@ class PlayState extends MusicBeatState
 		
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
-		case 'bgdemon':
-				add(kid);
 		}
 
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();
@@ -669,27 +667,14 @@ class PlayState extends MusicBeatState
 			SONG.player3 = gfVersion; //Fix for the Chart Editor
 		}
 
-		if (!stageData.hide_girlfriend)
-		{
-			gf = new Character(0, 0, gfVersion);
-			startCharacterPos(gf);
-			gf.scrollFactor.set(0.95, 0.95);
-			if (curStage == "bgdemon") {
-				gf.setGraphicSize(357);
-				gf.updateHitbox();
-			}
-			gfGroup.add(gf);
-			startCharacterLua(gf.curCharacter);
-		}
+		gf = new Character(0, 0, gfVersion);
+		startCharacterPos(gf);
+		gf.scrollFactor.set(0.95, 0.95);
+		gfGroup.add(gf);
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
-		if (SONG.song.toLowerCase() == "stressed")
-			dad.idleSuffix = "1";
-		else if (curStage == "bgdemon")
-			dad.idleSuffix = "-alt";
 		dadGroup.add(dad);
-		startCharacterLua(dad.curCharacter);
 
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
@@ -1802,8 +1787,7 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
-	
-	var cutsceneStaticTimer:FlxTween;
+
 	override public function update(elapsed:Float)
 	{
 		/*if (FlxG.keys.justPressed.NINE)
@@ -1812,17 +1796,6 @@ class PlayState extends MusicBeatState
 		}*/
 
 		callOnLuas('onUpdate', [elapsed]);
-
-		if (18731 < FlxG.sound.music.time && cutsceneStaticTimer == null && curSong.toLowerCase() == "the dark desire")
-			cutsceneStaticTimer = FlxTween.tween(kid, {alpha: 1}, 3.7829268292683, {onComplete: function (_) 
-			{
-				dad.idleSuffix = "";
-				dad.playAnim("idle", true);
-
-				new FlxTimer().start(0.4, function (_) {
-					FlxTween.tween(kid, {alpha: 0}, 0.4);
-				});
-			}});
 
 		switch (curStage)
 		{

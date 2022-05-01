@@ -388,9 +388,12 @@ class PlayState extends MusicBeatState
 				CoolUtil.precacheSound('thunder_1');
 				CoolUtil.precacheSound('thunder_2');
 
-			case 'philly': //Week 3
-				var bg:BGSprite = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
-				add(bg);
+			case 'bgdemon': //Week 3
+				kid = new BGSprite('HOLA_DEMONIO', 0, 0, 0, 0);
+				kid.cameras = [camHUD];
+				kid.screenCenter();
+				kid.alpha = 0;
+				
 			case 'limo': //Week 4
 				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
 				add(skyBG);

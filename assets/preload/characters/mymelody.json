@@ -9,7 +9,7 @@
 			"fps": 24,
 			"anim": "danceLeft",
 			"indices": [
-				30,
+				29,
 				0,
 				1,
 				2,
@@ -26,7 +26,7 @@
 				13,
 				14
 			],
-			"name": "GF Dancing Beat"
+			"name": "my melody"
 		},
 		{
 			"loop": false,
@@ -50,14 +50,13 @@
 				25,
 				26,
 				27,
-				28,
-				29
+				28
 			],
-			"name": "GF Dancing Beat"
+			"name": "my melody"
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/Sanrio_GF",
+	"image": "characters/Mymelody_Assets",
 	"position": [
 		0,
 		0

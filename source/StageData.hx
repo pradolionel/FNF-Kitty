@@ -15,6 +15,15 @@ typedef StageFile = {
 	var boyfriend:Array<Dynamic>;
 	var girlfriend:Array<Dynamic>;
 	var opponent:Array<Dynamic>;
+	var hide_girlfriend:Bool;
+	
+	var static_camera:Bool;
+	var static_camera_pos:Array<Float>;
+
+	var camera_boyfriend:Array<Float>;
+	var camera_opponent:Array<Float>;
+	var camera_girlfriend:Array<Float>;
+	var camera_speed:Null<Float>;
 }
 
 class StageData {
@@ -59,9 +68,18 @@ class StageData {
 		var rawJson:String = null;
 		var path:String = Paths.getPreloadPath('stages/' + stage + '.json');
 
+		#if MODS_ALLOWED
+		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
+		if(FileSystem.exists(modPath)) {
+			rawJson = File.getContent(modPath);
+		} else if(FileSystem.exists(path)) {
+			rawJson = File.getContent(path);
+		}
+		#else
 		if(Assets.exists(path)) {
 			rawJson = Assets.getText(path);
 		}
+		#end
 		else
 		{
 			return null;

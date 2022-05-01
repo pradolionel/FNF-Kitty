@@ -351,18 +351,48 @@ class PlayState extends MusicBeatState
 			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
-				opponent: [100, 100]
+				opponent: [100, 100],
+				hide_girlfriend: false,
+			
+				static_camera: false,
+				static_camera_pos: [0, 0],
+
+				camera_boyfriend: [0, 0],
+				camera_opponent: [0, 0],
+				camera_girlfriend: [0, 0],
+				camera_speed: 1
 			};
 		}
 
+		if (stageData.static_camera_pos == null)
+			stageData.static_camera_pos = [0, 0];
+
 		defaultCamZoom = stageData.defaultZoom;
 		isPixelStage = stageData.isPixelStage;
+		staticCamera = stageData.static_camera;
+		staticCamX = stageData.static_camera_pos[0];
+		staticCamY = stageData.static_camera_pos[1];
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
 		GF_X = stageData.girlfriend[0];
 		GF_Y = stageData.girlfriend[1];
 		DAD_X = stageData.opponent[0];
 		DAD_Y = stageData.opponent[1];
+
+		if(stageData.camera_speed != null)
+			cameraSpeed = stageData.camera_speed;
+
+		boyfriendCameraOffset = stageData.camera_boyfriend;
+		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
+			boyfriendCameraOffset = [0, 0];
+
+		opponentCameraOffset = stageData.camera_opponent;
+		if(opponentCameraOffset == null)
+			opponentCameraOffset = [0, 0];
+		
+		girlfriendCameraOffset = stageData.camera_girlfriend;
+		if(girlfriendCameraOffset == null)
+			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);

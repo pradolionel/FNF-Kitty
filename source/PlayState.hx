@@ -405,12 +405,18 @@ class PlayState extends MusicBeatState
 				add(hill_bg);
 				
 			case 'bgdemon': //Week 5
-		     	var kid:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('HOLA_DEMONIO'));
-				kid.antialiasing = ClientPrefs.globalAntialiasing;
+				var kid:FlxSprite = new FlxSprite().makeGraphic(1280, 720, FlxColor.BLACK);
 				kid.cameras = [camOther];
 				kid.alpha = 0;
+				kid.screenCenter(X);
 				add(kid);
 
+				var kidd:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('HOLA_DEMONIO'));
+				kidd.antialiasing = ClientPrefs.globalAntialiasing;
+				kidd.cameras = [camOther];
+				kidd.alpha = 0;
+				add(kidd);
+				
 			case '2517_untitled_20220419221714': //Week 5 - Winter Horrorland
 				var bg:BGSprite = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221714", 0, 0, 0.9, 0.9);
 				add(bg);

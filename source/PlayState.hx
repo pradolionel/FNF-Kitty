@@ -3650,7 +3650,6 @@ class PlayState extends MusicBeatState
 		
 		if (curSong == 'The Dark Desire' && curStep >= 300 && curStep <= 500)
 		{
-		    dad.idleSuffix = '';
 			dad.playAnim('idle', true);
 		}
 

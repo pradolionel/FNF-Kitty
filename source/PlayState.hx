@@ -1208,7 +1208,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):Void {
+public function startVideo(name:String):Void {
 		var foundFile:Bool = false;
 		var fileName = name;
 		if(OpenFlAssets.exists("assets/videos/" + fileName + ".webm")) 

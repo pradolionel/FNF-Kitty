@@ -1164,7 +1164,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 2:
-				if(gf != null && !gfMap.exists(newCharacter)) }
+			if(gf != null && !gfMap.exists(newCharacter)) }
 					var newGf:Character = new Character(0, 0, newCharacter);
 					newGf.scrollFactor.set(0.95, 0.95);
 					gfMap.set(newCharacter, newGf);

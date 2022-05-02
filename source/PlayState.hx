@@ -1208,42 +1208,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-public function startVideo(name:String):Void {
-		var foundFile:Bool = false;
-		var fileName = name;
-		if(OpenFlAssets.exists("assets/videos/" + fileName + ".webm")) 
-		{
-			foundFile = true;
-		}
-
-		if(foundFile) 
-		{
-            var video = new WebmPlayerS(fileName, true);
-            video.endcallback = () -> {
-                remove(video);
-                if(endingSong) {
-                    endSong();
-                } else {
-                    startCountdown();
-                }
-            }
-            video.setGraphicSize(FlxG.width);
-            video.updateHitbox();
-            add(video);
-            video.play();
-		} 
-		else 
-		{
-			if(endingSong) 
-			{
-				endSong();
-			} 
-			else 
-			{
-				startCountdown();
-			}
-		}
-	}	
+public function startVideo(name:String):Void }
 
 	var dialogueCount:Int = 0;
 	//You don't have to add a song, just saying. You can just do "startDialogue(dialogueJson);" and it should work

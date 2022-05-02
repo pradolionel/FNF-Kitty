@@ -3659,8 +3659,16 @@ class PlayState extends MusicBeatState
 			{
 				case 300:
 					dad.stunned = true;
-					tweens.push(FlxTween.tween(blackBord, {alpha: 1}, 15));
+					tweens.push(FlxTween.tween(kid, {alpha: 1}, 15));
 					tweens.push(FlxTween.tween(FlxG.camera, {zoom: 1.5}, 15, {ease: FlxEase.quadInOut, onComplete: function (tween:FlxTween) {defaultCamZoom = 1.5;}}));
+				case 512:
+					dad.stunned = false;
+					tweens.push(FlxTween.tween(kid, {alpha: 0}, 1));
+					tweens.push(FlxTween.tween(FlxG.camera, {zoom: 0.75}, 1, {ease: FlxEase.quadInOut, onComplete: function (tween:FlxTween) {defaultCamZoom = 0.75;}}));
+				case 768:
+					tweens.push(FlxTween.tween(FlxG.camera, {zoom: 0.55}, 1, {ease: FlxEase.quadInOut, onComplete: function (tween:FlxTween) {defaultCamZoom = 0.55;}}));
+				case 1036:
+					FlxTween.tween(blackFuck, {alpha: 1}, 4);
 			}
 		}
 		

@@ -3658,7 +3658,8 @@ class PlayState extends MusicBeatState
 			switch (curStep)
 			{
 				case 300:
-		tweens.push(FlxTween.tween(kid, {alpha: 1}, 15));
+		new FlxTimer().start(0.4, function (_) {
+		    FlxTween.tween(kid, {alpha: 0}, 0.4);
 			}
 		}
 		

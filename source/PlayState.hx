@@ -1718,18 +1718,7 @@ class PlayState extends MusicBeatState
 		}*/
 	
 		callOnLuas('onUpdate', [elapsed]);
-
-		if (18731 < FlxG.sound.music.time && cutsceneStaticTimer == null && curSong.toLowerCase() == "The Dark Desire")
-			cutsceneStaticTimer = FlxTween.tween(kid, {alpha: 1}, 3.7829268292683, {onComplete: function (_) 
-			{
-				dad.idleSuffix = "";
-				dad.playAnim("idle", true);
-
-				new FlxTimer().start(0.4, function (_) {
-					FlxTween.tween(kid, {alpha: 0}, 0.4);
-				});
-			}});
-			
+		
 		switch (curStage)
 		{
 			case 'schoolEvil':
@@ -3658,7 +3647,24 @@ class PlayState extends MusicBeatState
 		{
 			resyncVocals();
 		}
+		
+		if (curSong == 'The Dark Desire' && curStep >= 300 && curStep <= 500)
+		{
+		    dad.idleSuffix = '';
+			dad.playAnim('idle', true);
+		}
 
+		if (curSong == "The Dark Desire")
+		{
+			switch (curStep)
+			{
+				case 300:
+					dad.stunned = true;
+					tweens.push(FlxTween.tween(kid, {alpha: 1}, 15));
+					tweens.push(FlxTween.tween(FlxG.camera, {zoom: 1.5}, 15, {ease: FlxEase.quadInOut, onComplete: function (tween:FlxTween) {defaultCamZoom = 1.5;}}));
+			}
+		}
+		
 		if(curStep == lastStepHit) {
 			return;
 		}

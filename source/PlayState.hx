@@ -266,6 +266,15 @@ class PlayState extends MusicBeatState
 	// Lua shit
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
+	
+	//Mechanics
+	private var ps:Character = null;
+	private var psCounter:Int = 4;
+
+	var scream:FlxSprite = null;
+
+	var tweens:Array<FlxTween> = [];
+	var char:String = '';
 
 	override public function create()
 	{

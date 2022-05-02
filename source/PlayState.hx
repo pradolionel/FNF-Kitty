@@ -220,6 +220,7 @@ class PlayState extends MusicBeatState
 	var bgGhouls:BGSprite;
 
 	var kid:BGSprite;
+	var kidd:BGSprite;
 
 	var idk__a_strange_effect_for_the_screen:BGSprite;
 	var bed:BGSprite;
@@ -3677,7 +3678,7 @@ class PlayState extends MusicBeatState
 				case 768:
 					tweens.push(FlxTween.tween(FlxG.camera, {zoom: 0.55}, 1, {ease: FlxEase.quadInOut, onComplete: function (tween:FlxTween) {defaultCamZoom = 0.55;}}));
 				case 1036:
-					FlxTween.tween(blackFuck, {alpha: 1}, 4);
+					FlxTween.tween(kidd, {alpha: 1}, 4);
 			}
 		}
 		

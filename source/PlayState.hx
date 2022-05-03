@@ -56,12 +56,8 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
-
 #if sys
-import Sys;
 import sys.FileSystem;
-import openfl.Assets;
-import sys.io.File;
 #end
 
 #if mobileC

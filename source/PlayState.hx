@@ -160,6 +160,8 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
+	
+	private var xd:AttachedSprite;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -874,6 +876,15 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		
+		botplayTxt = new FlxText(400, xd.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if(ClientPrefs.downScroll) {
+			botplayTxt.y = xd.y - 78;
 
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];

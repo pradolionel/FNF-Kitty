@@ -2963,7 +2963,7 @@ class PlayState extends MusicBeatState
 
 
 	var transitioning = false;
-	public function endSong():Void
+	public function endSong():Void}
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {

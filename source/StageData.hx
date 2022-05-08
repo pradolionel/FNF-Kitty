@@ -1,11 +1,6 @@
 package;
 
-#if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
-#else
 import openfl.utils.Assets;
-#end
 import haxe.Json;
 import haxe.format.JsonParser;
 import Song;
@@ -40,7 +35,7 @@ class StageData {
 		} else if(SONG.song != null) {
 			switch (SONG.song.toLowerCase().replace(' ', '-'))
 			{
-				case 'spookeez' | 'south' | 'monster':
+ 'spookeez' | 'south' | 'monster':
 					stage = 'spooky';
 				case 'pico' | 'blammed' | 'philly' | 'philly-nice':
 					stage = 'philly';
@@ -73,18 +68,9 @@ class StageData {
 		var rawJson:String = null;
 		var path:String = Paths.getPreloadPath('stages/' + stage + '.json');
 
-		#if MODS_ALLOWED
-		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
-		if(FileSystem.exists(modPath)) {
-			rawJson = File.getContent(modPath);
-		} else if(FileSystem.exists(path)) {
-			rawJson = File.getContent(path);
-		}
-		#else
 		if(Assets.exists(path)) {
 			rawJson = Assets.getText(path);
 		}
-		#end
 		else
 		{
 			return null;

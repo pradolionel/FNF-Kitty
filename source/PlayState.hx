@@ -2928,8 +2928,7 @@ class PlayState extends MusicBeatState
 					camFollow.set(staticCamX, staticCamY);
 			}
 		}
-
-	function tweenCamIn() {
+		function tweenCamIn() {
 		if (Paths.formatToSongPath(SONG.song) == 'tutorial' && cameraTwn == null && FlxG.camera.zoom != 1.3) {
 			cameraTwn = FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut, onComplete:
 				function (twn:FlxTween) {
@@ -2963,7 +2962,8 @@ class PlayState extends MusicBeatState
 
 
 	var transitioning = false;
-	public function endSong():Void}
+	public function endSong():Void
+	{
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {

@@ -94,7 +94,6 @@ class PlayState extends MusicBeatState
 	#end
 
 	//event variables
-	private var opponentAltAnims:Bool = false;
 	private var isCameraOnForcedPos:Bool = false;
 	#if (haxe >= "4.0.0")
 	public var boyfriendMap:Map<String, Boyfriend> = new Map();
@@ -105,9 +104,7 @@ class PlayState extends MusicBeatState
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	#end
-	
-	public var staticCamX:Float = 0;
-	public var staticCamY:Float = 0;
+
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
 	public var DAD_X:Float = 100;
@@ -120,10 +117,8 @@ class PlayState extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
+
 	public static var curStage:String = '';
-	
-	public static var curStage:String = '';
-	public static var staticCamera:Bool = false;
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
@@ -354,48 +349,18 @@ class PlayState extends MusicBeatState
 			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
-				opponent: [100, 100],
-				hide_girlfriend: false,
-			
-				static_camera: false,
-				static_camera_pos: [0, 0],
-
-				camera_boyfriend: [0, 0],
-				camera_opponent: [0, 0],
-				camera_girlfriend: [0, 0],
-				camera_speed: 1
+				opponent: [100, 100]
 			};
 		}
 
-		if (stageData.static_camera_pos == null)
-			stageData.static_camera_pos = [0, 0];
-
 		defaultCamZoom = stageData.defaultZoom;
 		isPixelStage = stageData.isPixelStage;
-		staticCamera = stageData.static_camera;
-		staticCamX = stageData.static_camera_pos[0];
-		staticCamY = stageData.static_camera_pos[1];
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
 		GF_X = stageData.girlfriend[0];
 		GF_Y = stageData.girlfriend[1];
 		DAD_X = stageData.opponent[0];
 		DAD_Y = stageData.opponent[1];
-
-		if(stageData.camera_speed != null)
-			cameraSpeed = stageData.camera_speed;
-
-		boyfriendCameraOffset = stageData.camera_boyfriend;
-		if(boyfriendCameraOffset == null) //Fucks sake should have done it since the start :rolling_eyes:
-			boyfriendCameraOffset = [0, 0];
-
-		opponentCameraOffset = stageData.camera_opponent;
-		if(opponentCameraOffset == null)
-			opponentCameraOffset = [0, 0];
-		
-		girlfriendCameraOffset = stageData.camera_girlfriend;
-		if(girlfriendCameraOffset == null)
-			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -1878,35 +1843,6 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-/*   		if (FlxG.keys.pressed.CONTROL) {
-			staticCamera = true;
-			
-			var fnfKey:flixel.input.keyboard.FlxKeyList;
-			if (FlxG.keys.pressed.SHIFT) {
-				fnfKey = FlxG.keys.pressed;
-			} else {
-				fnfKey = FlxG.keys.justPressed;
-			}
-
-			if (FlxG.keys.justPressed.E)
-				defaultCamZoom += 0.01;
-			else if (FlxG.keys.justPressed.G)
-				defaultCamZoom -= 0.01;
-
-			if (fnfKey.RIGHT)
-				staticCamX += 1;
-			else if (fnfKey.LEFT)
-				staticCamX -= 1;
-			else if (fnfKey.UP)
-				staticCamY -= 1;
-			else if (fnfKey.DOWN)
-				staticCamY += 1;
-
-			//920, 798
-			//1148, 702
-			trace('staticCamX: ${staticCamX}, staticCamY: ${staticCamY}, defaultCamZoom: ${defaultCamZoom}');
-		} */
-
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -2788,13 +2724,15 @@ class PlayState extends MusicBeatState
 								addCharacterToList(value2, charType);
 							}
 
-							var lastAlpha:Float = boyfriend.alpha;
-							boyfriend.alpha = 0.00001;
+							boyfriend.visible = false;
 							boyfriend = boyfriendMap.get(value2);
-							boyfriend.alpha = lastAlpha;
+							if(!boyfriend.alreadyLoaded) {
+								boyfriend.alpha = 1;
+								boyfriend.alreadyLoaded = true;
+							}
+							boyfriend.visible = true;
 							iconP1.changeIcon(boyfriend.healthIcon);
 						}
-						setOnLuas('boyfriendName', boyfriend.curCharacter);
 
 					case 1:
 						if(dad.curCharacter != value2) {
@@ -2803,67 +2741,41 @@ class PlayState extends MusicBeatState
 							}
 
 							var wasGf:Bool = dad.curCharacter.startsWith('gf');
-							var lastAlpha:Float = dad.alpha;
-							dad.alpha = 0.00001;
+							dad.visible = false;
 							dad = dadMap.get(value2);
 							if(!dad.curCharacter.startsWith('gf')) {
-								if(wasGf && gf != null) {
+								if(wasGf) {
 									gf.visible = true;
 								}
-							} else if(gf != null) {
+							} else {
 								gf.visible = false;
 							}
-							dad.alpha = lastAlpha;
+							if(!dad.alreadyLoaded) {
+								dad.alpha = 1;
+								dad.alreadyLoaded = true;
+							}
+							dad.visible = true;
 							iconP2.changeIcon(dad.healthIcon);
 						}
-						setOnLuas('dadName', dad.curCharacter);
 
 					case 2:
-						if(gf != null)
-						{
-							if(gf.curCharacter != value2)
-							{
-								if(!gfMap.exists(value2))
-								{
-									addCharacterToList(value2, charType);
-								}
-
-								var lastAlpha:Float = gf.alpha;
-								gf.alpha = 0.00001;
-								gf = gfMap.get(value2);
-								gf.alpha = lastAlpha;
+						if(gf.curCharacter != value2) {
+							if(!gfMap.exists(value2)) {
+								addCharacterToList(value2, charType);
 							}
-							setOnLuas('gfName', gf.curCharacter);
+
+							gf.visible = false;
+							gf = gfMap.get(value2);
+							if(!gf.alreadyLoaded) {
+								gf.alpha = 1;
+								gf.alreadyLoaded = true;
+							}
 						}
 				}
 				reloadHealthBarColors();
 			
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
-			
-			case 'Change Scroll Speed':
-				if (songSpeedType == "constant")
-					return;
-				var val1:Float = Std.parseFloat(value1);
-				var val2:Float = Std.parseFloat(value2);
-				if(Math.isNaN(val1)) val1 = 1;
-				if(Math.isNaN(val2)) val2 = 0;
-
-				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
-
-				if(val2 <= 0)
-				{
-					songSpeed = newValue;
-				}
-				else
-				{
-					songSpeedTween = FlxTween.tween(this, {songSpeed: newValue}, val2, {ease: FlxEase.linear, onComplete:
-						function (twn:FlxTween)
-						{
-							songSpeedTween = null;
-						}
-					});
-				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -2871,64 +2783,75 @@ class PlayState extends MusicBeatState
 	function moveCameraSection(?id:Int = 0):Void {
 		if(SONG.notes[id] == null) return;
 
-		if (gf != null && SONG.notes[id].gfSection)
-		{
-			camFollow.set(gf.getMidpoint().x, gf.getMidpoint().y);
-			camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];
-			camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
-			tweenCamIn();
-			callOnLuas('onMoveCamera', ['gf']);
-			return;
-		}
-
 		if (!SONG.notes[id].mustHitSection)
 		{
 			moveCamera(true);
-			callOnLuas('onMoveCamera', ['dad']);
+			
+			if (SONG.notes[id].gfSection){
+				callOnLuas('onMoveCamera', ['gf']);
+			}else{
+				callOnLuas('onMoveCamera', ['dad']);
+			}
 		}
 		else
 		{
 			moveCamera(false);
-			callOnLuas('onMoveCamera', ['boyfriend']);
+			if (SONG.notes[id].gfSection){
+				callOnLuas('onMoveCamera', ['gf']);
+			}else{
+				callOnLuas('onMoveCamera', ['boyfriend']);
+			}
 		}
 	}
 
 	var cameraTwn:FlxTween;
-	public function moveCamera(isDad:Bool)
-	{
-		if (!staticCamera) {
-			if(isDad)
-			{
-				camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-				camFollow.x += dad.cameraPosition[0] + opponentCameraOffset[0];
-				camFollow.y += dad.cameraPosition[1] + opponentCameraOffset[1];
-				tweenCamIn();
-			}
-			else
-			{
-				camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
-				camFollow.x -= boyfriend.cameraPosition[0] - boyfriendCameraOffset[0];
-				camFollow.y += boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];
-
-				if (Paths.formatToSongPath(SONG.song) == 'tutorial' && cameraTwn == null && FlxG.camera.zoom != 1)
-				{
-					cameraTwn = FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut, onComplete:
-						function (twn:FlxTween)
-						{
-							cameraTwn = null;
-						}
-					});
-				}
-			}
+	public function moveCamera(isDad:Bool) {
+		
+		
+		
+		if(isDad) {
+			camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+			camFollow.x += dad.cameraPosition[0];
+			camFollow.y += dad.cameraPosition[1];
+			tweenCamIn();
 		} else {
-			switch (curStage) {
-				//case 'your stage name in case you want to set position manual source code instead':
+			camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
 
-				default:
-					camFollow.set(staticCamX, staticCamY);
+			switch (curStage)
+			{
+				case 'limo':
+					camFollow.x = boyfriend.getMidpoint().x - 300;
+				case 'mall':
+					camFollow.y = boyfriend.getMidpoint().y - 200;
+				case 'school' | 'schoolEvil':
+					camFollow.x = boyfriend.getMidpoint().x - 200;
+					camFollow.y = boyfriend.getMidpoint().y - 200;
+			}
+			camFollow.x -= boyfriend.cameraPosition[0];
+			camFollow.y += boyfriend.cameraPosition[1];
+
+			if (Paths.formatToSongPath(SONG.song) == 'tutorial' && cameraTwn == null && FlxG.camera.zoom != 1) {
+				cameraTwn = FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut, onComplete:
+					function (twn:FlxTween) {
+						cameraTwn = null;
+					}
+				});
 			}
 		}
-		function tweenCamIn() {
+		
+		
+		
+		if (SONG.notes[Std.int(curStep / 16)].gfSection){
+			
+			camFollow.set(gf.getMidpoint().x, gf.getMidpoint().y);
+			camFollow.x += gf.cameraPosition[0];
+			camFollow.y += gf.cameraPosition[1];
+			tweenCamIn();
+		}
+		
+	}
+
+	function tweenCamIn() {
 		if (Paths.formatToSongPath(SONG.song) == 'tutorial' && cameraTwn == null && FlxG.camera.zoom != 1.3) {
 			cameraTwn = FlxTween.tween(FlxG.camera, {zoom: 1.3}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut, onComplete:
 				function (twn:FlxTween) {

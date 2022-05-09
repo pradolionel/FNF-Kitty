@@ -443,6 +443,7 @@ class PlayState extends MusicBeatState
 				kid.cameras = [camHUD];
 				kid.screenCenter();
 				kid.alpha = 0;
+				add(kid);
 
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {

@@ -571,6 +571,8 @@ class PlayState extends MusicBeatState
 			if(gf != null)
 				gf.visible = false;
 		}
+	}
+}
 
 		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
 		if (OpenFlAssets.exists(file)) {
@@ -946,11 +948,9 @@ class PlayState extends MusicBeatState
 		{
 			for (lua in luaArray)
 			{
-			    
-			}
 			luaArray.push(new FunkinLua(luaFile));
+			}
 		}
-		#end
 	}
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION

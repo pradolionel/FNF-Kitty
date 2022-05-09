@@ -438,6 +438,21 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 				
+			case '2517_untitled_20220419221714': //Freeplay
+				var bg:BGSprite = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221714", 0, 0, 0.9, 0.9);
+				add(bg);
+
+				idk__a_strange_effect_for_the_screen = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221943", 0, 0, 0, 0);
+				idk__a_strange_effect_for_the_screen.cameras = [camHUD];
+				idk__a_strange_effect_for_the_screen.setGraphicSize(FlxG.width, FlxG.height);
+				idk__a_strange_effect_for_the_screen.updateHitbox();
+				idk__a_strange_effect_for_the_screen.screenCenter();
+				
+					add(idk__a_strange_effect_for_the_screen);
+
+				bed = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419220829", 74, 84, 1.1, 1.1);
+		}
+				
 			case 'bgdemon': //Freeplay
 				kid = new BGSprite("HOLA_DEMONIO", 0, 0, 0, 0);
 				kid.cameras = [camHUD];

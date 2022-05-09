@@ -705,8 +705,14 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		
-		if(curStage == 'spooky') {
-			add(halloweenWhite);
+		switch (curStage) {
+			case 'spooky':
+				add(halloweenWhite);
+			case 'bgdemon':
+				add(kid);
+			case '2517_untitled_20220419221714':
+				add(bed);
+				add(idk__a_strange_effect_for_the_screen);
 		}
 
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();

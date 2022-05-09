@@ -659,39 +659,18 @@ class PlayState extends MusicBeatState
 					add(bgGirls);
 				}
 
-			case 'schoolEvil': //Week 6 - Thorns
-				GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pixel';
-				GameOverSubstate.loopSoundName = 'gameOver-pixel';
-				GameOverSubstate.endSoundName = 'gameOverEnd-pixel';
-				GameOverSubstate.characterName = 'bf-pixel-dead';
+			case '2517_untitled_20220419221714': //Freeplay
+				var bg:BGSprite = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221714", 0, 0, 0.9, 0.9);
+				add(bg);
 
-				/*if(!ClientPrefs.lowQuality) { //Does this even do something?
-					var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
-					var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
-				}*/
+				idk__a_strange_effect_for_the_screen = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221943", 0, 0, 0, 0);
+				idk__a_strange_effect_for_the_screen.cameras = [camHUD];
+				idk__a_strange_effect_for_the_screen.setGraphicSize(FlxG.width, FlxG.height);
+				idk__a_strange_effect_for_the_screen.updateHitbox();
+				idk__a_strange_effect_for_the_screen.screenCenter();
 
-				var posX = 400;
-				var posY = 200;
-				if(!ClientPrefs.lowQuality) {
-					var bg:BGSprite = new BGSprite('weeb/animatedEvilSchool', posX, posY, 0.8, 0.9, ['background 2'], true);
-					bg.scale.set(6, 6);
-					bg.antialiasing = false;
-					add(bg);
-
-					bgGhouls = new BGSprite('weeb/bgGhouls', -100, 190, 0.9, 0.9, ['BG freaks glitch instance'], false);
-					bgGhouls.setGraphicSize(Std.int(bgGhouls.width * daPixelZoom));
-					bgGhouls.updateHitbox();
-					bgGhouls.visible = false;
-					bgGhouls.antialiasing = false;
-					add(bgGhouls);
-				} else {
-					var bg:BGSprite = new BGSprite('weeb/animatedEvilSchool_low', posX, posY, 0.8, 0.9);
-					bg.scale.set(6, 6);
-					bg.antialiasing = false;
-					add(bg);
-				}
+				bed = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419220829", 74, 84, 1.1, 1.1);
 		}
-
 		if(isPixelStage) {
 			introSoundsSuffix = '-pixel';
 		}
@@ -3845,7 +3824,7 @@ class PlayState extends MusicBeatState
 
 		// 2% chance of a phrase appearing
 		if (FlxG.random.bool(2) && phrasesExisting < 2 && curStage == "2517_untitled_20220419221714") {
-			var selectedPhrase:String = Paths.randomImageFrom('assets/shared/images/phrases', FlxG.save.data.prevPhrase);
+		    var selectedPhrase:String = Paths.randomImageFrom('assets/shared/images/phrases', FlxG.save.data.prevPhrase);
 			FlxG.save.data.prevPhrase = selectedPhrase;
 
 			var phrase:FlxSprite = new FlxSprite(0, 0);

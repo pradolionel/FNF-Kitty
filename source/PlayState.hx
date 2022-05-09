@@ -451,8 +451,8 @@ class PlayState extends MusicBeatState
 					add(idk__a_strange_effect_for_the_screen);
 
 				bed = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419220829", 74, 84, 1.1, 1.1);
-		    
 		}
+		
 			case 'bgdemon': //Freeplay
 				kid = new BGSprite("HOLA_DEMONIO", 0, 0, 0, 0);
 				kid.cameras = [camHUD];

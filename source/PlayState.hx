@@ -3671,8 +3671,11 @@ class PlayState extends MusicBeatState
 		if (trainSound.time >= 4700)
 		{
 			startedMoving = true;
-			gf.playAnim('hairBlow');
-			gf.specialAnim = true;
+			if (gf != null)
+			{
+				gf.playAnim('hairBlow');
+				gf.specialAnim = true;
+			}
 		}
 
 		if (startedMoving)
@@ -3695,9 +3698,12 @@ class PlayState extends MusicBeatState
 
 	function trainReset():Void
 	{
-		gf.danced = false; //Sets head to the correct position once the animation ends
-		gf.playAnim('hairFall');
-		gf.specialAnim = true;
+		if(gf != null)
+		{
+			gf.danced = false; //Sets head to the correct position once the animation ends
+			gf.playAnim('hairFall');
+			gf.specialAnim = true;
+		}
 		phillyTrain.x = FlxG.width + 200;
 		trainMoving = false;
 		// trainSound.stop();
@@ -3718,11 +3724,12 @@ class PlayState extends MusicBeatState
 		if(boyfriend.animOffsets.exists('scared')) {
 			boyfriend.playAnim('scared', true);
 		}
-		if(gf.animOffsets.exists('scared')) {
+
+		if(gf != null && gf.animOffsets.exists('scared')) {
 			gf.playAnim('scared', true);
 		}
 
-		if(ClientPrefs.camZooms) {
+ 		if(ClientPrefs.camZooms) {
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 
@@ -3730,7 +3737,7 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.5);
 				FlxTween.tween(camHUD, {zoom: 1}, 0.5);
 			}
-		}
+		} 
 
 		if(ClientPrefs.flashing) {
 			halloweenWhite.alpha = 0.4;
@@ -3752,11 +3759,11 @@ class PlayState extends MusicBeatState
 
 				#if ACHIEVEMENTS_ALLOWED
 				Achievements.henchmenDeath++;
+				FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 				var achieve:String = checkForAchievement(['roadkill_enthusiast']);
 				if (achieve != null) {
 					startAchievement(achieve);
 				} else {
-					FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 					FlxG.save.flush();
 				}
 				FlxG.log.add('Deaths: ' + Achievements.henchmenDeath);
@@ -3787,10 +3794,16 @@ class PlayState extends MusicBeatState
 			luaArray[i].stop();
 		}
 		luaArray = [];
+
+		if(!ClientPrefs.controllerMode)
+		{
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+		}
 		super.destroy();
 	}
 
-	public function cancelFadeTween() {
+	public static function cancelMusicFadeTween() {
 		if(FlxG.sound.music.fadeTween != null) {
 			FlxG.sound.music.fadeTween.cancel();
 		}

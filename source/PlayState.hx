@@ -3639,12 +3639,16 @@ class PlayState extends MusicBeatState
 	var lightningOffset:Int = 8;
 
 	var lastBeatHit:Int = -1;
+	
+	
+	
+	
 	override function beatHit()
 	{
 		super.beatHit();
 
 		if(lastBeatHit >= curBeat) {
-			trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
+			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
 			return;
 		}
 

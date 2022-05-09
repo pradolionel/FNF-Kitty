@@ -437,6 +437,12 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
+				
+			case 'bgdemon': //Freeplay
+				kid = new BGSprite("HOLA_DEMONIO", 0, 0, 0, 0);
+				kid.cameras = [camHUD];
+				kid.screenCenter();
+				kid.alpha = 0;
 
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {

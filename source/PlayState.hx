@@ -1887,6 +1887,17 @@ class PlayState extends MusicBeatState
 		}*/
 
 		callOnLuas('onUpdate', [elapsed]);
+		
+		if (18731 < FlxG.sound.music.time && cutsceneStaticTimer == null && curSong.toLowerCase() == "the dark desire")
+			cutsceneStaticTimer = FlxTween.tween(kid, {alpha: 1}, 3.7829268292683, {onComplete: function (_) 
+			{
+				dad.idleSuffix = "";
+				dad.playAnim("idle", true);
+
+				new FlxTimer().start(0.4, function (_) {
+					FlxTween.tween(kid, {alpha: 0}, 0.4);
+				});
+			}});
 
 		switch (curStage)
 		{

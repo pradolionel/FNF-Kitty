@@ -216,11 +216,17 @@ class PlayState extends MusicBeatState
 	var upperBoppers:BGSprite;
 	var bottomBoppers:BGSprite;
 	var santa:BGSprite;
+	var sun:BGSprite;
 	var heyTimer:Float;
 
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
+
+	var kid:BGSprite;
+
+	var idk__a_strange_effect_for_the_screen:BGSprite;
+	var bed:BGSprite;
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;

@@ -893,6 +893,7 @@ class PlayState extends MusicBeatState
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 		healthBar.updateBar();
 	}
+	
 	public function addCharacterToList(newCharacter:String, type:Int) {
 		switch(type) {
 			case 0:

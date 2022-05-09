@@ -571,9 +571,7 @@ class PlayState extends MusicBeatState
 			if(gf != null)
 				gf.visible = false;
 		}
-	}
-}
-
+		
 		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
 		if (OpenFlAssets.exists(file)) {
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);

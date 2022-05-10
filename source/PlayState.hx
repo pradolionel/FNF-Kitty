@@ -561,7 +561,18 @@ class PlayState extends MusicBeatState
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);	
+
+		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
+		{
+			camPos.x += gf.getGraphicMidpoint().x + gf.cameraPosition[0];
+			camPos.y += gf.getGraphicMidpoint().y + gf.cameraPosition[1];
 		}
+
+		if(dad.curCharacter.startsWith('gf')) {
+			dad.setPosition(GF_X, GF_Y);
+				gf.visible = false;
+		}
+
 		switch(curStage)
 		{
 			case 'limo':

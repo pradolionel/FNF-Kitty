@@ -3642,8 +3642,6 @@ class PlayState extends MusicBeatState
 		// 2% chance of a phrase appearing
 		if (FlxG.random.bool(2) && phrasesExisting < 2 && curStage == "2517_untitled_20220419221714") {
 		    
-			FlxG.save.data.prevPhrase = selectedPhrase;
-
 			var phrase:FlxSprite = new FlxSprite(0, 0);
 			phrase.loadGraphic(Paths.image('phrases/$selectedPhrase', 'shared'));
 			phrase.cameras = [camHUD];

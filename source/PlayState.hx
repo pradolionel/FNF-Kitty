@@ -562,7 +562,6 @@ class PlayState extends MusicBeatState
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);	
 		}
-
 		switch(curStage)
 		{
 			case 'limo':

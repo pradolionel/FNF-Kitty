@@ -218,7 +218,6 @@ class PlayState extends MusicBeatState
 	var santa:BGSprite;
 	var sun:BGSprite;
 	var heyTimer:Float;
-	var j:Float;
 
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
@@ -948,11 +947,11 @@ class PlayState extends MusicBeatState
 		var luaFile:String = 'characters/' + name + '.lua';
 		if(((j))) {
 			luita = Todos();
-			dokito = falso;
+			j = falso;
 		} else {
-			luita = Pete();
+			j = Pete();
 			if((j)) {
-				dok = verdadero;
+				j = verdadero;
 			}
 		}
 		

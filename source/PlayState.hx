@@ -869,23 +869,11 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-				
-				case 'butterfly':
-					startVideo("Animacion_1_Kitty");
-				
-				case 'stressed':
-					startVideo("20220321_1080p1_1");
-
-				case 'beautiful-smile':
-					startVideo("Kitty cutscene 2");
-
 				default:
 					startCountdown();
 			}
 			seenCutscene = true;
-		}
-		else
-		{
+		} else {
 			startCountdown();
 		}
 		RecalculateRating();
@@ -2837,7 +2825,19 @@ class PlayState extends MusicBeatState
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
+					MusicBeatState.switchState(new StoryMenuState());
 
+					// if ()
+					if(!usedPractice) {
+						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
+
+						if (SONG.validScore)
+						{
+							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
+						}
+
+						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
+						FlxG.save.flush();
 					}
 					usedPractice = false;
 					changedDifficulty = false;
@@ -2919,6 +2919,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
+	public function KillNotes() {
 		while(notes.length > 0) {
 			var daNote:Note = notes.members[0];
 			daNote.active = false;

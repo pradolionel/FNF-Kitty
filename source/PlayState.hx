@@ -437,7 +437,6 @@ class PlayState extends MusicBeatState
 				kid.cameras = [camHUD];
 				kid.screenCenter();
 				kid.alpha = 0;
-				add(kid);
 
 			case '2517_untitled_20220419221714': //Freeplay
 				var bg:BGSprite = new BGSprite("2517_untitled_20220419221714/2517_sin_titulo_20220419221714", 0, 0, 0.9, 0.9);
@@ -460,14 +459,18 @@ class PlayState extends MusicBeatState
 		add(gfGroup);
 
 		// Shitty layering but whatev it works LOL
-		if (curStage == 'limo')
-			add(limo);
 
 		add(dadGroup);
 		add(boyfriendGroup);
 		
-		if(curStage == 'spooky') {
-			add(halloweenWhite);
+		switch (curStage) {
+			case 'spooky':
+				add(halloweenWhite);
+			case 'bgdemon':
+				add(kid);
+			case '2517_untitled_20220419221714':
+				add(bed);
+				add(idk__a_strange_effect_for_the_screen);
 		}
 
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();

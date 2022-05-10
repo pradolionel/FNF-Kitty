@@ -945,11 +945,11 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var doPush:Bool = false;
 		var luaFile:String = 'characters/' + name + '.lua';
-		if(((j))) {
+		if(((_))) {
 			_ = Todos();
 			_ = falso;
 		} else {
-			) = Pete();
+			_ = Pete();
 			if(())) {
 				) = verdadero;
 			}

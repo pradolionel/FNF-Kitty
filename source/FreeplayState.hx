@@ -26,6 +26,7 @@ class FreeplayState extends MusicBeatState
 
 	var selector:FlxText;
 	private static var curSelected:Int = 0;
+	private static var curDifficulty:Int = 1;
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -366,6 +367,11 @@ class FreeplayState extends MusicBeatState
 		}
 
 		// selector.y = (70 * curSelected) + 30;
+
+		#if !switch
+		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
+		#end
 
 		var bullShit:Int = 0;
 

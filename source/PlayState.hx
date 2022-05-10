@@ -2815,7 +2815,7 @@ class PlayState extends MusicBeatState
 				#if !switch
 				var percent:Float = ratingPercent;
 				if(Math.isNaN(percent)) percent = 0;
-				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
+
 				#end
 			}
 
@@ -2843,7 +2843,7 @@ class PlayState extends MusicBeatState
 
 						if (SONG.validScore)
 						{
-							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
+
 						}
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
@@ -2855,7 +2855,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					var difficulty:String = '' + CoolUtil.difficultyStuff[storyDifficulty][1];
+
 
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);

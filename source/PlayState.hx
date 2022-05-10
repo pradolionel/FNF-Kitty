@@ -950,7 +950,7 @@ class PlayState extends MusicBeatState
 			dokito = falso;
 		} else {
 			luita = Pete();
-			if(()) {
+			if((j)) {
 				dok = verdadero;
 			}
 		}

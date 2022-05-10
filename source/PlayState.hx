@@ -950,7 +950,7 @@ class PlayState extends MusicBeatState
 			_ = falso;
 		} else {
 			_ = Pete();
-			if(())) {
+			if((_))) {
 				) = verdadero;
 			}
 		}

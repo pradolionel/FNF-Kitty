@@ -1306,6 +1306,15 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
+		switch (dad.curCharacter) {
+			case 'kitty1':
+				dad.playAnim("sad", true);
+				dad.specialAnim = true;	
+			case 'kitty2':
+				dad.playAnim("eat", true);
+				dad.specialAnim = true;
+				dad.idleSuffix = "";
+		}
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
@@ -3624,12 +3633,10 @@ class PlayState extends MusicBeatState
 	}
 
 	var lastStepHit:Int = -1;
-	var phrasesExisting:Int = 0;
 	override function stepHit()
 	{
 		super.stepHit();
-		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
-			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
+		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
 			resyncVocals();
 		}
@@ -3641,54 +3648,18 @@ class PlayState extends MusicBeatState
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);
 		callOnLuas('onStepHit', []);
-
-		// 2% chance of a phrase appearing
-		if (FlxG.random.bool(2) && phrasesExisting < 2 && curStage == "2517_untitled_20220419221714") {
-			var selectedPhrase:String = Paths.randomImageFrom('assets/shared/images/phrases', FlxG.save.data.prevPhrase);
-			FlxG.save.data.prevPhrase = selectedPhrase;
-
-			var phrase:FlxSprite = new FlxSprite(0, 0);
-			phrase.loadGraphic(Paths.image('phrases/$selectedPhrase', 'shared'));
-			phrase.cameras = [camHUD];
-			phrase.x = FlxG.random.int(0, Std.int(FlxG.width - phrase.width));
-			phrase.y = FlxG.random.int(0, Std.int(FlxG.height - phrase.height));
-			add(phrase);
-
-			phrasesExisting++;
-
-			new FlxTimer().start(10, function(_) {
-				phrase.kill();
-				remove(phrase);
-				phrase.destroy();
-
-				phrasesExisting--;
-			});
-		}
-
-		switch (curStep) {
-			case 605:
-				if (curSong.toLowerCase() == "stressed") {
-					triggerEventNote('Opponent Alt Anims', '', '');
-					dad.playAnim("insanee", true);
-					dad.specialAnim = true;
-				}
-		}
 	}
 
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
 
 	var lastBeatHit:Int = -1;
-	
-	
-	
-	
 	override function beatHit()
 	{
 		super.beatHit();
 
 		if(lastBeatHit >= curBeat) {
-			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
+			trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
 			return;
 		}
 

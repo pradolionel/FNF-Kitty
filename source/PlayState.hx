@@ -128,12 +128,13 @@ class PlayState extends MusicBeatState
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
+	public static var storyDifficulty:Int = 1;
 
 	public var vocals:FlxSound;
 
-	public var dad:Character = null;
-	public var gf:Character = null;
-	public var boyfriend:Boyfriend = null;
+	public var dad:Character;
+	public var gf:Character;
+	public var boyfriend:Boyfriend;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -254,6 +255,7 @@ class PlayState extends MusicBeatState
 
 	#if desktop
 	// Discord RPC variables
+	var storyDifficultyText:String = "";
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
@@ -867,23 +869,11 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-				
-				case 'butterfly':
-					startVideo("Animacion_1_Kitty");
-				
-				case 'stressed':
-					startVideo("20220321_1080p1_1");
-
-				case 'beautiful-smile':
-					startVideo("Kitty cutscene 2");
-
 				default:
 					startCountdown();
 			}
 			seenCutscene = true;
-		}
-		else
-		{
+		} else {
 			startCountdown();
 		}
 		RecalculateRating();
@@ -2815,7 +2805,7 @@ class PlayState extends MusicBeatState
 				#if !switch
 				var percent:Float = ratingPercent;
 				if(Math.isNaN(percent)) percent = 0;
-
+				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 				#end
 			}
 
@@ -2843,7 +2833,7 @@ class PlayState extends MusicBeatState
 
 						if (SONG.validScore)
 						{
-
+							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 						}
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
@@ -2855,9 +2845,10 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-
+					var difficulty:String = '' + CoolUtil.difficultyStuff[storyDifficulty][1];
 
 					trace('LOADING NEXT SONG');
+					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
 
 					var winterHorrorlandNext = (Paths.formatToSongPath(SONG.song) == "eggnog");
 					if (winterHorrorlandNext)
@@ -2877,7 +2868,8 @@ class PlayState extends MusicBeatState
 					prevCamFollow = camFollow;
 					prevCamFollowPos = camFollowPos;
 
-
+					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
+					FlxG.sound.music.stop();
 
 					if(winterHorrorlandNext) {
 						new FlxTimer().start(1.5, function(tmr:FlxTimer) {

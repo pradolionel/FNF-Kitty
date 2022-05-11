@@ -3632,8 +3632,6 @@ class PlayState extends MusicBeatState
 					dad.playAnim("insanee", true);
 					dad.specialAnim = true;
 				}
-		}
-	}
 
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);

@@ -3631,7 +3631,7 @@ class PlayState extends MusicBeatState
 					triggerEventNote('Opponent Alt Anims', '', '');
 					dad.playAnim("insanee", true);
 					dad.specialAnim = true;
-				}
+	}
 
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);

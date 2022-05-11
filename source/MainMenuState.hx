@@ -214,7 +214,23 @@ class MainMenuState extends MusicBeatState
 								switch (daChoice)
 								{
 									case 'story_mode':
-										MusicBeatState.switchState(new StoryMenuState());
+										WeekData.reloadWeekFiles(true);
+
+										var weekSong:Array<String> = [];
+
+										for (songData in WeekData.weeksLoaded["week a"].songs) {
+											weekSong.push(songData[0]);
+										}
+
+										PlayState.storyPlaylist = weekSong;
+										PlayState.isStoryMode = true;
+							
+										PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase(), PlayState.storyPlaylist[0].toLowerCase());
+										PlayState.campaignScore = 0;
+										PlayState.campaignMisses = 0;
+										
+										LoadingState.loadAndSwitchState(new PlayState(), true);
+										FreeplayState.destroyFreeplayVocals();
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
 									case 'awards':

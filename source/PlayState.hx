@@ -535,26 +535,44 @@ class PlayState extends MusicBeatState
 			SONG.player3 = gfVersion; //Fix for the Chart Editor
 		}
 
-		gf = new Character(0, 0, gfVersion);
-		startCharacterPos(gf);
-		gf.scrollFactor.set(0.95, 0.95);
-		gfGroup.add(gf);
+		if (!stageData.hide_girlfriend)
+		{
+			gf = new Character(0, 0, gfVersion);
+			startCharacterPos(gf);
+			gf.scrollFactor.set(0.95, 0.95);
+			if (curStage == "bgdemon") {
+				gf.setGraphicSize(357);
+				gf.updateHitbox();
+			}
+			gfGroup.add(gf);
+			startCharacterLua(gf.curCharacter);
+		}
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
+		if (SONG.song.toLowerCase() == "stressed")
+			dad.idleSuffix = "1";
+		else if (curStage == "bgdemon")
+			dad.idleSuffix = "-alt";
 		dadGroup.add(dad);
-
+		startCharacterLua(dad.curCharacter);
+		
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
-		
-		var camPos:FlxPoint = new FlxPoint(gf.getGraphicMidpoint().x, gf.getGraphicMidpoint().y);
-		camPos.x += gf.cameraPosition[0];
-		camPos.y += gf.cameraPosition[1];
+		startCharacterLua(boyfriend.curCharacter);	
+
+		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
+		if(gf != null)
+		{
+			camPos.x += gf.getGraphicMidpoint().x + gf.cameraPosition[0];
+			camPos.y += gf.getGraphicMidpoint().y + gf.cameraPosition[1];
+		}
 
 		if(dad.curCharacter.startsWith('gf')) {
 			dad.setPosition(GF_X, GF_Y);
-			gf.visible = false;
+			if(gf != null)
+				gf.visible = false;
 		}
 
 		switch(curStage)
@@ -851,11 +869,23 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
+				
+				case 'butterfly':
+					startVideo("Animacion_1_Kitty");
+				
+				case 'stressed':
+					startVideo("20220321_1080p1_1");
+
+				case 'beautiful-smile':
+					startVideo("Kitty cutscene 2");
+
 				default:
 					startCountdown();
 			}
 			seenCutscene = true;
-		} else {
+		}
+		else
+		{
 			startCountdown();
 		}
 		RecalculateRating();
@@ -3625,13 +3655,6 @@ class PlayState extends MusicBeatState
 		if(curStep == lastStepHit) {
 			return;
 		}
-		switch (curStep) {
-			case 605:
-				if (curSong.toLowerCase() == "stressed") {
-					triggerEventNote('Opponent Alt Anims', '', '');
-					dad.playAnim("insanee", true);
-					dad.specialAnim = true;
-	}
 
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);

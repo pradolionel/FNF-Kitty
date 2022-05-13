@@ -3661,16 +3661,6 @@ class PlayState extends MusicBeatState
 		callOnLuas('onStepHit', []);
 	}
 
-		switch (curStep) {
-			case 605:
-				if (curSong.toLowerCase() == "stressed") {
-					triggerEventNote('Opponent Alt Anims', '', '');
-					dad.playAnim("insanee", true);
-					dad.specialAnim = true;
-				}
-		}
-	}
-
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
 

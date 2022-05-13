@@ -3846,12 +3846,6 @@ class PlayState extends MusicBeatState
 						if(ratingPercent < 0.2 && !practiceMode && !cpuControlled) {
 							unlock = true;
 						}
-					case 605:
-				if (curSong.toLowerCase() == "stressed") {
-					triggerEventNote('Opponent Alt Anims', '', '');
-					dad.playAnim("insanee", true);
-					dad.specialAnim = true;
-				}
 					case 'ur_good':
 						if(ratingPercent >= 1 && !usedPractice && !cpuControlled) {
 							unlock = true;

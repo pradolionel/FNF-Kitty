@@ -227,7 +227,8 @@ class ChartingState extends MusicBeatState
 				splashSkin: '',
 				player1: 'bf',
 				player2: 'dad',
-				player3: 'gf',
+				player3: null,
+				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
 				validScore: false
@@ -463,10 +464,10 @@ class ChartingState extends MusicBeatState
 
 		var player3DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, player1DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
-			_song.player3 = characters[Std.parseInt(character)];
+			_song.gfVersion = characters[Std.parseInt(character)];
 			updateHeads();
 		});
-		player3DropDown.selectedLabel = _song.player3;
+		player3DropDown.selectedLabel = _song.gfVersion;
 		blockPressWhileScrolling.push(player3DropDown);
 
 		var player2DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, player3DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
@@ -2043,7 +2044,8 @@ class ChartingState extends MusicBeatState
 
 			player1: _song.player1,
 			player2: _song.player2,
-			player3: _song.player3,
+			player3: null,
+			gfVersion: _song.gfVersion,
 			stage: _song.stage,
 			validScore: false
 		};

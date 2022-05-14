@@ -180,6 +180,8 @@ class PlayState extends MusicBeatState
 
 	var botplaySine:Float = 0;
 	var botplayTxt:FlxText;
+	
+	var watermark:FlxText;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
@@ -740,6 +742,13 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		
+		watermark = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		watermark.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		watermark.scrollFactor.set();
+		watermark.borderSize = 1.25;
+		watermark.visible = cpuControlled;
+		add(watermark);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -760,6 +769,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
+		watermark.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
@@ -3647,38 +3657,6 @@ class PlayState extends MusicBeatState
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);
 		callOnLuas('onStepHit', []);
-
-		// 2% chance of a phrase appearing
-		if (FlxG.random.bool(2) && phrasesExisting < 2 && curStage == "2517_untitled_20220419221714") {
-			var selectedPhrase:String = Paths.randomImageFrom('assets/shared/images/phrases', FlxG.save.data.prevPhrase);
-			FlxG.save.data.prevPhrase = selectedPhrase;
-
-			var phrase:FlxSprite = new FlxSprite(0, 0);
-			phrase.loadGraphic(Paths.image('phrases/$selectedPhrase', 'shared'));
-			phrase.cameras = [camHUD];
-			phrase.x = FlxG.random.int(0, Std.int(FlxG.width - phrase.width));
-			phrase.y = FlxG.random.int(0, Std.int(FlxG.height - phrase.height));
-			add(phrase);
-
-			phrasesExisting++;
-
-			new FlxTimer().start(10, function(_) {
-				phrase.kill();
-				remove(phrase);
-				phrase.destroy();
-
-				phrasesExisting--;
-			});
-		}
-
-		switch (curStep) {
-			case 605:
-				if (curSong.toLowerCase() == "stressed") {
-					triggerEventNote('Opponent Alt Anims', '', '');
-					dad.playAnim("insanee", true);
-					dad.specialAnim = true;
-				}
-		}
 	}
 
 	var lightningStrikeBeat:Int = 0;

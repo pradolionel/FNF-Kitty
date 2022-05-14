@@ -3657,7 +3657,6 @@ class PlayState extends MusicBeatState
 					dad.specialAnim = true;
 				}
 		}
-	}
 
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;

@@ -3649,7 +3649,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('onStepHit', []);
 		}
 
-		switch (curStep) {
+		switch (curStep)
 			case 605:
 				if (curSong.toLowerCase() == "stressed") {
 					triggerEventNote('Opponent Alt Anims', '', '');

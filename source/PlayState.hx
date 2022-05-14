@@ -869,23 +869,11 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-				
-				case 'butterfly':
-					startVideo("Animacion_1_Kitty");
-				
-				case 'stressed':
-					startVideo("20220321_1080p1_1");
-
-				case 'beautiful-smile':
-					startVideo("Kitty cutscene 2");
-
 				default:
 					startCountdown();
 			}
 			seenCutscene = true;
-		}
-		else
-		{
+		} else {
 			startCountdown();
 		}
 		RecalculateRating();

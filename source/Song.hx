@@ -53,7 +53,12 @@ private static function onLoadJson(songJson:SwagSong) // Convert old charts to n
 		{
 			songJson.gfVersion = songJson.player3;
 			songJson.player3 = null;
+					}
+					else i++;
+				}
+			}
 		}
+	}
 	
 	public function new(song, notes, bpm)
 	{

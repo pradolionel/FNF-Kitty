@@ -502,7 +502,7 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 
 		if(!modchartSprites.exists('blammedLightsBlack')) { //Creates blammed light black fade in case you didn't make your own
-			blammedLightsBlack = new ModchartSprite(FlxG.width * 100000, FlxG.height * 2000000);
+			blammedLightsBlack = new ModchartSprite(FlxG.width * -0.5, FlxG.height * -0.5);
 			blammedLightsBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 			var position:Int = members.indexOf(gfGroup);
 			if(members.indexOf(boyfriendGroup) < position) {
@@ -3294,6 +3294,7 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			/*boyfriend.stunned = true;
+
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{

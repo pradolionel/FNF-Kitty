@@ -917,7 +917,7 @@ class PlayState extends MusicBeatState
 					boyfriendGroup.add(newBoyfriend);
 					startCharacterPos(newBoyfriend);
 					newBoyfriend.alpha = 0.00001;
-					startCharacterLua(newBoyfriend.curCharacter);
+					newBoyfriend.alreadyLoaded = false;
 				}
 
 			case 1:
@@ -927,22 +927,21 @@ class PlayState extends MusicBeatState
 					dadGroup.add(newDad);
 					startCharacterPos(newDad, true);
 					newDad.alpha = 0.00001;
-					startCharacterLua(newDad.curCharacter);
+					newDad.alreadyLoaded = false;
 				}
 
 			case 2:
-				if(gf != null && !gfMap.exists(newCharacter)) {
+				if(!gfMap.exists(newCharacter)) {
 					var newGf:Character = new Character(0, 0, newCharacter);
 					newGf.scrollFactor.set(0.95, 0.95);
 					gfMap.set(newCharacter, newGf);
 					gfGroup.add(newGf);
 					startCharacterPos(newGf);
 					newGf.alpha = 0.00001;
-					startCharacterLua(newGf.curCharacter);
+					newGf.alreadyLoaded = false;
 				}
 		}
 	}
-
 	function startCharacterLua(name:String)
 	{
 		#if LUA_ALLOWED
@@ -3294,7 +3293,6 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			/*boyfriend.stunned = true;
-
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{

@@ -155,6 +155,33 @@ class Paths
 	{
 		return 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Inst.$SOUND_EXT';
 	}
+	
+	inline static public function image(key:String, ?library:String):FlxGraphic
+	{
+		// streamlined the assets process more
+		var returnAsset:FlxGraphic = returnGraphic(key, library);
+		return returnAsset;
+	}
+
+	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
+		var selectedFile:String = "";
+
+		#if sys
+		var files:Array<String> = sys.FileSystem.readDirectory(key);
+		for (i in 0...files.length)
+		{
+			files[i] = StringTools.replace(files[i], ".png", "");
+		}
+
+		selectedFile = files[FlxG.random.int(0, files.length - 1)];
+		while (selectedFile == prevRandomImage)
+			selectedFile = files[FlxG.random.int(0, files.length - 1)];
+		
+		return selectedFile;
+		#end
+
+		return null;
+	}
 
 	inline static public function image(key:String, ?library:String):Dynamic
 	{

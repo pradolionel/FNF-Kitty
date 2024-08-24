@@ -223,6 +223,26 @@ class Paths
 		#end
 		return getPath('images/$key.png', IMAGE, library);
 	}
+
+	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
+		var selectedFile:String = "";
+
+		#if sys
+		var files:Array<String> = sys.FileSystem.readDirectory(key);
+		for (i in 0...files.length)
+		{
+			files[i] = StringTools.replace(files[i], ".png", "");
+		}
+
+		selectedFile = files[FlxG.random.int(0, files.length - 1)];
+		while (selectedFile == prevRandomImage)
+			selectedFile = files[FlxG.random.int(0, files.length - 1)];
+		
+		return selectedFile;
+		#end
+
+		return null;
+	}
 	
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{

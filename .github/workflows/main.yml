@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Kitty On Hell Android Build CI
+name: BCI
 
 # Controls when the action will run. 
 on:
@@ -20,32 +20,26 @@ jobs:
     name: buildAndroid
     runs-on: ubuntu-latest
     steps:
-      - name: Run actions/checkout@v2
-        uses: actions/checkout@v2.3.1
-
-      - name: Run krdlab/setup-haxe@v1
-        uses: nttld/setup-ndk@v1
+      - uses: actions/checkout@v2.3.1
+        
+      - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r21e
-
-      - name: Cache haxelib path
-        uses: actions/setup-java@v1
+          
+      - uses: actions/setup-java@v1
         with:
           java-version: 11
-
-      - name: Setup Android SDK Tools
-        uses: android-actions/setup-android@v2
-
-      - name: Setup Java JDK
-        uses: krdlab/setup-haxe@v1.1.5
+          
+      - uses: android-actions/setup-android@v2
+        
+      - uses: krdlab/setup-haxe@v1.1.5
         with:
           haxe-version: 4.2.5
 
       - name: script run line haha
         run: |
-          mkdir -p "%HAXELIB_ROOT%"
-          haxelib setup "%HAXELIB_ROOT%"
+          haxelib setup ~/haxelib
           haxelib install lime 7.9.0 --quiet
           haxelib install openfl 9.1.0 --quiet
           haxelib install flixel 4.11.0 --quiet
@@ -58,7 +52,7 @@ jobs:
           haxelib git polymod https://github.com/larsiusprime/polymod --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
           haxelib git extension-webm https://github.com/Sirox228/extension-webm --quiet
-          haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit --quiet
+          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit --quiet
           haxelib install actuate 
           haxelib list
       - name: Create Version Tag
@@ -83,5 +77,5 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Kitty Android Ci Build
+          name: KFP
           path: export/release/android/bin/app/build/outputs/apk/debug

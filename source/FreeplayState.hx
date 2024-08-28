@@ -323,7 +323,7 @@ class FreeplayState extends MusicBeatState
 		vocals = null;
 	}
 
-	function changeDiff(change:Int = 0)
+	/*function changeDiff(change:Int = 0)
 	{
 		curDifficulty += change;
 
@@ -340,7 +340,7 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
-	}
+	}*/
 
 	function changeSelection(change:Int = 0)
 	{

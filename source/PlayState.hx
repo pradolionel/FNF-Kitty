@@ -2818,7 +2818,7 @@ class PlayState extends MusicBeatState
 				#end
 			}
 
-			/*if (isStoryMode)
+			if (isStoryMode)
 			{
 				campaignScore += songScore;
 				campaignMisses += songMisses;
@@ -2834,10 +2834,10 @@ class PlayState extends MusicBeatState
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new MainMenuState());
 
 					// if ()
-					if(!usedPractice) {
+					/*if(!usedPractice) {
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 
 						if (SONG.validScore)
@@ -2847,7 +2847,7 @@ class PlayState extends MusicBeatState
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
-					}
+					}*/
 					usedPractice = false;
 					changedDifficulty = false;
 					cpuControlled = false;
@@ -2906,7 +2906,7 @@ class PlayState extends MusicBeatState
 				usedPractice = false;
 				changedDifficulty = false;
 				cpuControlled = false;
-			}*/
+			}
 			transitioning = true;
 		}
 	}

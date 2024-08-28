@@ -226,9 +226,7 @@ class Paths
 
 	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
 		var selectedFile:String = "";
-
-		#if sys
-		var files:Array<String> = OpenFlAssets.exists(key);
+		
 		for (i in 0...files.length)
 		{
 			files[i] = StringTools.replace(files[i], ".png", "");
@@ -239,7 +237,6 @@ class Paths
 			selectedFile = files[FlxG.random.int(0, files.length - 1)];
 		
 		return selectedFile;
-		#end
 
 		return null;
 	}

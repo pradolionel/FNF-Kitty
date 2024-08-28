@@ -34,11 +34,11 @@ class PauseSubState extends MusicBeatSubstate
 		super();
 		menuItems = menuItemsOG;
 
-		for (i in 0...CoolUtil.difficultyStuff.length) {
+		/*for (i in 0...CoolUtil.difficultyStuff.length) {
 			var diff:String = '' + CoolUtil.difficultyStuff[i][0];
 			difficultyChoices.push(diff);
 		}
-		difficultyChoices.push('BACK');
+		difficultyChoices.push('BACK');*/
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -58,12 +58,12 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
-		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
+		/*var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
 		levelDifficulty.text += CoolUtil.difficultyString();
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
-		add(levelDifficulty);
+		add(levelDifficulty);*/
 
 		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
 		blueballedTxt.text = "Blueballed: " + PlayState.deathCounter;

@@ -3,7 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
-import lime.utils.AssetType;
 import openfl.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
@@ -229,7 +228,7 @@ class Paths
 	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
 		var selectedFile:String = "";
 
-		var files:Array<String> = Assets.list(AssetType.IMAGE);
+		var files:Array<String> = Assets.list(key);
 		for (i in 0...files.length)
 		{
 			files[i] = StringTools.replace(files[i], ".png", "");

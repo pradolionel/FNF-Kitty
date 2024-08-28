@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
+import lime.utils.AssetType;
 import openfl.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;

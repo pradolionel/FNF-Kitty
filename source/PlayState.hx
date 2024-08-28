@@ -2818,7 +2818,7 @@ class PlayState extends MusicBeatState
 				#end
 			}
 
-			if (isStoryMode)
+			/*if (isStoryMode)
 			{
 				campaignScore += songScore;
 				campaignMisses += songMisses;
@@ -2906,7 +2906,7 @@ class PlayState extends MusicBeatState
 				usedPractice = false;
 				changedDifficulty = false;
 				cpuControlled = false;
-			}
+			}*/
 			transitioning = true;
 		}
 	}

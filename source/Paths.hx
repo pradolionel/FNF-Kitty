@@ -228,7 +228,7 @@ class Paths
 		var selectedFile:String = "";
 
 		#if sys
-		var files:Array<String> = sys.FileSystem.readDirectory(key);
+		var files:Array<String> = OpenFlAssets.exists(key);
 		for (i in 0...files.length)
 		{
 			files[i] = StringTools.replace(files[i], ".png", "");

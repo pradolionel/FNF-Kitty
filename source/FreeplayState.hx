@@ -135,7 +135,7 @@ class FreeplayState extends MusicBeatState
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
 		changeSelection();
-		changeDiff();
+		//changeDiff();
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -247,10 +247,10 @@ class FreeplayState extends MusicBeatState
 			changeSelection(shiftMult);
 		}
 
-		if (controls.UI_LEFT_P)
+		/*if (controls.UI_LEFT_P)
 			changeDiff(-1);
 		if (controls.UI_RIGHT_P)
-			changeDiff(1);
+			changeDiff(1);*/
 
 		if (controls.BACK)
 		{
@@ -396,7 +396,7 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
-		changeDiff();
+		//changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;		
 	}
 

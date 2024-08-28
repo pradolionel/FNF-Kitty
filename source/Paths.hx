@@ -226,7 +226,8 @@ class Paths
 
 	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
 		var selectedFile:String = "";
-		
+
+		var files:Array<String> = Assets.list(AssetType.IMAGE);
 		for (i in 0...files.length)
 		{
 			files[i] = StringTools.replace(files[i], ".png", "");

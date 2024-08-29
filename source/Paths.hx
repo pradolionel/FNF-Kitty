@@ -12,7 +12,6 @@ import flixel.FlxSprite;
 import sys.io.File;
 import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
-import openfl.display.BitmapData;
 #end
 
 import flash.media.Sound;

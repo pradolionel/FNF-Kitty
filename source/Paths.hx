@@ -6,6 +6,7 @@ import openfl.utils.AssetType;
 import openfl.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
+import openfl.display.BitmapData;
 import flixel.FlxSprite;
 #if MODS_ALLOWED
 import sys.io.File;

@@ -2791,7 +2791,7 @@ class PlayState extends MusicBeatState
 		deathCounter = 0;
 		seenCutscene = false;
 
-		#if ACHIEVEMENTS_ALLOWED
+		/*#if ACHIEVEMENTS_ALLOWED
 		if(achievementObj != null) {
 			return;
 		} else {
@@ -2804,7 +2804,7 @@ class PlayState extends MusicBeatState
 				return;
 			}
 		}
-		#end
+		#end*/
 
 		var ret:Dynamic = callOnLuas('onEndSong', []);
 
@@ -3209,12 +3209,12 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				#if ACHIEVEMENTS_ALLOWED
+				/*#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
 				if (achieve != null) {
 					startAchievement(achieve);
 				}
-				#end
+				#end*/
 			} else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
@@ -3587,7 +3587,7 @@ class PlayState extends MusicBeatState
 				limoCorpseTwo.visible = false;
 				limoKillingState = 1;
 
-				#if ACHIEVEMENTS_ALLOWED
+				/*#if ACHIEVEMENTS_ALLOWED
 				Achievements.henchmenDeath++;
 				var achieve:String = checkForAchievement(['roadkill_enthusiast']);
 				if (achieve != null) {
@@ -3597,7 +3597,7 @@ class PlayState extends MusicBeatState
 					FlxG.save.flush();
 				}
 				FlxG.log.add('Deaths: ' + Achievements.henchmenDeath);
-				#end
+				#end*/
 			}
 		}
 	}

@@ -32,7 +32,7 @@ jobs:
           haxelib install lime 7.9.0 --quiet
           haxelib install openfl 9.1.0 --quiet
           haxelib install flixel 4.11.0 --quiet
-          haxelib install hxcpp --quiet
+          haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp --quiet
           haxelib install flixel-tools --quiet
           haxelib install flixel-ui --quiet
           haxelib install flixel-addons 2.10.0 --quiet

@@ -224,23 +224,10 @@ class Paths
 		#end
 		return getPath('images/$key.png', IMAGE, library);
 	}
-
-	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
-		var selectedFile:String = "";
-
-		var files:Array<String> = OpenFlAssets.exists(key);
-		for (i in 0...files.length)
-		{
-			files[i] = StringTools.replace(files[i], ".png", "");
-		}
-
-		selectedFile = files[FlxG.random.int(0, files.length - 1)];
-		while (selectedFile == prevRandomImage)
-			selectedFile = files[FlxG.random.int(0, files.length - 1)];
-		
-		return selectedFile;
-
-		return null;
+	
+	inline static public function randomImageFrom(key:String, min:Int, max:Int, ?library:String)
+	{
+		return image(key + FlxG.random.int(min, max), library);
 	}
 	
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String

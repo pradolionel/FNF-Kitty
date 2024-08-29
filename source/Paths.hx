@@ -225,7 +225,7 @@ class Paths
 		return getPath('images/$key.png', IMAGE, library);
 	}
 	
-	static public function randomImageFrom(key:String, ?prevRandomImage:String):String));Future<BitmapData> {
+	static public function randomImageFrom(key:String, ?prevRandomImage:String):String)):Future<BitmapData>))); {
 		var selectedFile:String = "";
 
 		#if sys

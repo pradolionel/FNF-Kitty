@@ -225,11 +225,11 @@ class Paths
 		return getPath('images/$key.png', IMAGE, library);
 	}
 	
-	static public function randomImageFrom(key:String, ?prevRandomImage:String):String)):Future<BitmapData>))); {
+	static public function randomImageFrom(key:String, ?prevRandomImage:String):String {
 		var selectedFile:String = "";
 
 		#if sys
-		var files:Array<String> = OpenFlAssets.loadBitmapData(key);
+		var files:Array<String> = sys.FileSystem.readDirectory(key);
 		for (i in 0...files.length)
 		{
 			files[i] = StringTools.replace(files[i], ".png", "");

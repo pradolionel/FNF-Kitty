@@ -26,6 +26,12 @@ jobs:
         with:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '11'
+
+      - uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r21e
+          local-cache: true
           
       - uses: krdlab/setup-haxe@v1.1.5
         with:
@@ -47,7 +53,7 @@ jobs:
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
           haxelib git extension-webm https://github.com/Sirox228/extension-webm --quiet
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit --quiet
-          haxelib install actuate 
+          haxelib install actuate
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -55,10 +61,12 @@ jobs:
       - name: Configure Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
-          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
           haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
-
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          
       - name: Build Log
         run: haxelib run lime build android --app-version="4.0.0-${{ github.run_id}}"
 

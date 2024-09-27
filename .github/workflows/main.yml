@@ -1,64 +1,41 @@
-# This is a basic workflow to help you get started with Actions
-
-name: BCI
-
-# Controls when the action will run. 
+name: build
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  #push:
-    #branches: [ main ]
-  #pull_request:
-    #branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  buildAndroid:
-    name: buildAndroid
+  main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
-      
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '11'
-
-      - uses: nttld/setup-ndk@v1
+      - name: checkout
+        uses: actions/checkout@main
+      - name: setup ndk
+        uses: nttld/setup-ndk@main
         id: setup-ndk
         with:
           ndk-version: r21e
           local-cache: true
-          
-      - uses: krdlab/setup-haxe@v1.1.5
+      - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.2.5
 
       - name: script run line haha
         run: |
-          haxelib setup ~/haxelib
-          haxelib install lime 7.9.0 --quiet
-          haxelib install openfl 9.1.0 --quiet
-          haxelib install flixel 4.11.0 --quiet
-          haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp --quiet
-          haxelib install flixel-tools --quiet
-          haxelib install flixel-ui --quiet
-          haxelib install flixel-addons 2.10.0 --quiet
-          haxelib install hscript --quiet
-          haxelib git faxe https://github.com/uhrobots/faxe --quiet
-          haxelib git polymod https://github.com/larsiusprime/polymod --quiet
-          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
-          haxelib git extension-webm https://github.com/Sirox228/extension-webm --quiet
-          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit --quiet
+          haxe -version
+          haxelib install lime 7.9.0
+          haxelib git openfl https://github.com/openfl/openfl develop
+          haxelib install flixel 4.11.0
+          haxelib git hxcpp https://github.com/haxefoundation/hxcpp master
+          haxelib install flixel-tools
+          haxelib install flixel-ui
+          haxelib install flixel-addons 2.11.0
+          haxelib install hscript
+          haxelib git faxe https://github.com/uhrobots/faxe
+          haxelib git polymod https://github.com/larsiusprime/polymod
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib git extension-webm https://github.com/Sirox228/extension-webm
+          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib install actuate
           haxelib list
-      - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
-
-      - name: Configure Android
+      - name: compile mobile
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
           haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
@@ -66,12 +43,12 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-          
-      - name: Build Log
-        run: haxelib run lime build android --app-version="4.0.0-${{ github.run_id}}"
-
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+      - name: compile
+        run: |
+          haxelib run lime rebuild hxcpp
+          haxelib run lime build android
+      - name: download build
+        uses: actions/upload-artifact@main
         with:
-          name: KFP
+          name: kfp
           path: export/release/android/bin/app/build/outputs/apk/debug

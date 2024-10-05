@@ -20,7 +20,7 @@ jobs:
       - name: script run line haha
         run: |
           haxe -version
-          haxelib install lime 7.9.0
+          haxelib install lime
           haxelib git openfl https://github.com/openfl/openfl develop
           haxelib install flixel 4.11.0
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp master
